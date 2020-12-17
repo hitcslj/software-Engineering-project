@@ -50,7 +50,9 @@
                     var itemprice = "";
                     var sumprice = 0;
                     var suminprice = 0;
-                    table.innerHTML = "";//表单删除之前内容
+                    table.innerHTML = " <th>商品名称</th>\n" +
+                        "                        <th>商品数量</th>\n" +
+                        "                        <th>商品价格</th>";//表单删除之前内容
                     for (var counter =0 ;counter<iteminputname.length;counter++)
                     {
                         var input = document.getElementById(iteminputname[counter]);//获取各个输入
@@ -65,7 +67,7 @@
                             p2.innerText = input.value;
                             sumprice+=Number(itemprices[counter])*Number(input.value);
                             suminprice+=Number(iteminprices[counter])*Number(input.value);
-                            p3.innerText = "价格：" + String(Number(itemprices[counter])*Number(input.value));
+                            p3.innerText = String(Number(itemprices[counter])*Number(input.value));
                             p.appendChild(p1);
                             p.appendChild(p2);
                             p.appendChild(p3);
@@ -187,7 +189,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <form role="form">
                     <div class="form-group">
-                        <select class="form-control" id = 'switchrewh'onchange="Switchretailandwholesale()">
+                        <select class="form-control" id = 'switchrewh' onchange="Switchretailandwholesale()">
                             <option>零售</option>
                             <option>批发</option>
                         </select>
@@ -362,6 +364,7 @@
                 </div>
                 <div class="modal-body">
                     <table id="order">
+
                     </table>
                 </div>
                 <div class="modal-footer">
@@ -372,8 +375,8 @@
                     <input type="hidden" name="inPrice" value=""/>
                     <input type="hidden" name="state" value="ok"/>
                     <input type="hidden" name="type" value=""/>
-                    <input type="text" name="telephone" value="telephone"/>
-                    <input type="text" name="customerName" value="customerName"/>
+                    电话号码：<input type="text" name="telephone" value=""/>
+                    客户姓名：<input type="text" name="customerName" value=""/><br>
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                     </button>
                     <button type="submit" class="btn btn-primary">
