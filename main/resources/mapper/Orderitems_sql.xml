@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为OrderDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cc.dao.OrderitemsDao">
+    <insert id="addOrderitem" parameterType="Orderitem">
+        INSERT INTO orderitems(orderid,itemnum,itemid
+        )VALUES(#{orderid},#{itemnum},#{itemid})
+    </insert>
+    <select id="getItemidByOrderid" resultType="Orderitem" parameterType="Integer">
+        SELECT * FROM orderitems WHERE orderid = #{orderid}
+    </select>
+    <delete id="deleteOrderitem" parameterType="Integer">
+        DELETE FROM orderitems WHERE orderid = #{orderid}
+    </delete>
+</mapper>

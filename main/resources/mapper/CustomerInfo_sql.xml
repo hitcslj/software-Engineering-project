@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为CustomerDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cc.dao.CustomerInfoDao">
+    <insert id="insertCustomer" parameterType="CustomerInfo">
+        INSERT INTO CUSTOMERINFO(NAME,telephone)VALUES(#{name},#{telephone})
+    </insert>
+
+    <delete id="deleteCustomer" parameterType="int">
+        DELETE FROM CUSTOMERINFO WHERE ID=#{id}
+    </delete>
+    <update id="updateCustomer" parameterType="CustomerInfo">
+        UPDATE CUSTOMERINFO
+        <set>
+            <if test="name!=null and name!=''">NAME =#{name},</if>
+            <if test="telephone!=null and telephone!=''">TELEPHONE =#{telephone}</if>
+        </set>
+        where ID=#{id}
+    </update>
+
+    <select id="selectCustomerById" resultType="CustomerInfo" parameterType="int">
+        SELECT * FROM CUSTOMERINFO WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="CustomerInfo">
+        SELECT * FROM CUSTOMERINFO order by id desc
+    </select>
+
+    <select id="selectCustomerByName" parameterType="java.lang.String" resultType="CustomerInfo">
+        SELECT * FROM CUSTOMERINFO WHERE NAME=#{Name}
+    </select>
+
+    <select id="selectCustomerByParams" resultType="CustomerInfo" parameterType="CustomerInfo">
+        SELECT * FROM CUSTOMERINFO
+        <where>
+            <if test="name!=null and name!=''">and NAME=#{name}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectCustomerCount" resultType="int">
+        select count(*) from CUSTOMERINFO
+    </select>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为ItemsDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cc.dao.ItemsInfoDao">
+    <insert id="insertItems" parameterType="ItemsInfo">
+        INSERT INTO ITEMS(name,price,number,location,inprice,tradeprice)VALUES(#{name},#{price},#{number},#{location},#{inprice},#{tradeprice})
+    </insert>
+
+    <delete id="deleteItems" parameterType="int">
+        DELETE FROM ITEMS WHERE ID=#{id}
+    </delete>
+    <update id="updateItems" parameterType="ItemsInfo">
+        UPDATE ITEMS
+        <set>
+            <if test="name!=null and name!=''">NAME =#{name},</if>
+            <if test="price!=null and price!=''">price =#{price},</if>
+            <if test="number!=null and number!=''">number =#{number},</if>
+            <if test="location!=null and location!=''">LOCATION =#{location},</if>
+            <if test="inprice!=null and inprice !=''">INPRICE =#{inprice},</if>
+            <if test="tradeprice!=null and tradeprice!=''">TRADEPRICE =#{tradeprice},</if>
+        </set>
+        where ID=#{id}
+    </update>
+
+    <select id="selectItemsById" resultType="ItemsInfo" parameterType="int">
+        SELECT * FROM ITEMS WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="ItemsInfo">
+        SELECT * FROM ITEMS order by id desc
+    </select>
+
+    <select id="selectItemsByItemsName" parameterType="java.lang.String" resultType="ItemsInfo">
+        SELECT * FROM ITEMS WHERE NAME=#{Name}
+    </select>
+    <select id="selectItemsByItemsNameAndLocation"  resultType="ItemsInfo">
+        SELECT * FROM ITEMS
+        <where>
+            <if test="param1 != null and param1 != ''">
+                NAME=#{param1}
+            </if>
+            <if test="param2 != null and param2 != ''">
+                and LOCATION = #{param2}
+            </if>
+        </where>
+    </select>
+    <select id="selectItemsByLocation" resultType="ItemsInfo">
+        SELECT * FROM ITEMS WHERE LOCATION = #{Location}
+    </select>
+
+    <select id="selectItemsByParams" resultType="ItemsInfo" parameterType="ItemsInfo">
+        SELECT * FROM ITEMS
+        <where>
+            <if test="name!=null and name!=''">and NAME=#{name}</if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectItemsCount" resultType="int">
+        select count(*) from ITEMS
+    </select>
+</mapper>

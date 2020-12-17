@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 设置为OrderDao接口方法提供sql语句配置 -->
+<mapper namespace="com.cc.dao.OrderDao">
+    <insert id="addOrder" parameterType="OrderInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO orders(state,customername,telephone,type
+        )VALUES(#{state},#{customerName},#{telephone},#{type})
+    </insert>
+
+    <delete id="deleteOrder" parameterType="Integer">
+        DELETE FROM orders WHERE ID=#{id}
+    </delete>
+    <update id="updateOrder" parameterType="OrderInfo">
+        UPDATE orders
+        <set>
+            <if test="customerName!=null and customerName!=''">CUSTOMERNAME =#{customerName},</if>
+            <if test="telephone!=null and telephone!=''">TELEPHONE =#{telephone},</if>
+            <if test="state!=null and state!=''">STATE =#{state},</if>
+            <if test="type!=null and type!=''">type =#{type},</if>
+        </set>
+        where ID=#{id}
+    </update>
+    <select id="selectOrderById" resultType="OrderInfo" parameterType="Integer">
+        SELECT * FROM orders WHERE id = #{id}
+    </select>
+   <select id="selectOrderByType" resultType="OrderInfo">
+       SELECT * FROM orders WHERE type = #{type}
+   </select>
+    <select id="selectOrderByState" resultType="OrderInfo">
+        SELECT * FROM orders WHERE state = #{state}
+    </select>
+    <select id="selectAll" resultType="OrderInfo">
+        SELECT * FROM orders order by id desc
+    </select>
+
+    <select id="selectOrderByCustomerName" parameterType="java.lang.String" resultType="OrderInfo">
+        SELECT * FROM orders WHERE CUSTOMERNAME=#{customerName}
+    </select>
+
+    <select id="selectOrderByParams" resultType="OrderInfo" parameterType="OrderInfo">
+        SELECT * FROM orders
+        <where>
+            <if test="id!=null and id!=''">
+                ID=#{id}
+            </if>
+            <if test="customerName!=null and customerName!=''">
+               and CUSTOMERNAME=#{customerName}
+            </if>
+            <if test="type!=null and type!=''">
+               and TYPE=#{type}
+            </if>
+            <if test="state !=null and state!=''">
+               and STATE=#{state}
+            </if>
+        </where>
+        order by id desc
+    </select>
+
+    <select id="selectOrderCount" resultType="Integer">
+        select count(*) from orders
+    </select>
+</mapper>
